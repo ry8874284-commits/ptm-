@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coaching PTM Portal - Google Sheets Connected</title>
+    <title>Coaching PTM Portal - 100% Complete & Responsive</title>
     <style>
+        /* CSS Reset and Base Styles */
         * {
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -17,38 +18,53 @@
             background-color: #f4f7f6;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 15px 20px;
+            padding: 15px;
             text-align: center;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
+        /* Layout Container */
         .main-container {
             display: flex;
             flex: 1;
+            flex-direction: row;
             overflow: hidden;
         }
 
-        /* Student List Sidebar */
+        /* Desktop Sidebar View */
         .sidebar {
             width: 300px;
             background-color: #34495e;
             color: white;
             overflow-y: auto;
-            padding: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
         }
 
         .sidebar h3 {
-            padding: 10px;
+            padding-bottom: 10px;
             border-bottom: 1px solid #4f5d73;
             text-align: center;
             margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .mobile-select-wrapper {
+            display: none;
+        }
+
+        .student-list-container {
+            overflow-y: auto;
+            flex: 1;
         }
 
         .student-item {
@@ -58,36 +74,38 @@
             transition: 0.2s;
             border-radius: 4px;
             margin-bottom: 5px;
+            font-size: 14px;
         }
 
         .student-item:hover {
             background-color: #1abc9c;
         }
 
-        /* Form Container */
+        /* Form & Form Wrapper Styles */
         .form-container {
             flex: 1;
-            padding: 25px;
+            padding: 20px;
             overflow-y: auto;
             background-color: #fff;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
         }
 
         .form-card {
             background: white;
-            padding: 25px;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border-top: 5px solid #1abc9c;
             width: 100%;
-            max-width: 700px;
+            max-width: 650px;
         }
 
         h2 {
             margin-bottom: 20px;
             color: #2c3e50;
+            font-size: 18px;
+            text-align: center;
         }
 
         .form-group {
@@ -96,36 +114,48 @@
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-weight: 600;
             color: #333;
+            font-size: 14px;
         }
 
         input[type="text"],
-        textarea {
+        textarea,
+        select {
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
             font-size: 14px;
+            background-color: #fff;
         }
 
         textarea {
             resize: vertical;
-            height: 80px;
+            height: 90px;
         }
 
+        input[readonly] {
+            background-color: #e9ecef;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: not-allowed;
+        }
+
+        /* Buttons and Status Alerts */
         button {
             background-color: #1abc9c;
             color: white;
             border: none;
-            padding: 12px 20px;
+            padding: 14px;
             font-size: 16px;
-            border-radius: 4px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
             width: 100%;
             transition: 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -139,45 +169,112 @@
 
         #status-message {
             margin-top: 15px;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             font-weight: bold;
-            border-radius: 4px;
+            border-radius: 6px;
             display: none;
+            font-size: 14px;
         }
 
         .success {
             background-color: #d4edda;
             color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
         .loading {
             background-color: #fff3cd;
             color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        /* Mobile Layout Modifications via Media Queries */
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                overflow: visible;
+            }
+
+            .sidebar {
+                width: 100%;
+                max-height: none;
+                padding: 15px;
+                border-bottom: 1px solid #ddd;
+                background-color: #2c3e50;
+            }
+
+            .sidebar h3 {
+                display: none;
+            }
+
+            .student-list-container {
+                display: none;
+            }
+
+            .mobile-select-wrapper {
+                display: block;
+            }
+
+            .mobile-select-wrapper label {
+                color: white;
+                margin-bottom: 8px;
+                font-size: 15px;
+            }
+
+            .form-container {
+                padding: 15px;
+                overflow: visible;
+            }
+
+            .form-card {
+                padding: 15px;
+                box-shadow: none;
+                border: 1px solid #eee;
+            }
+
+            header {
+                font-size: 18px;
+                padding: 12px;
+            }
+
+            button {
+                padding: 16px;
+                font-size: 15px;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <header>🏫 Coaching PTM Management Portal</header>
+    <header>🏫 Coaching PTM Portal</header>
 
     <div class="main-container">
-        <!-- Sidebar: Student List -->
+        <!-- Sidebar / Selector Section -->
         <div class="sidebar">
             <h3>बच्चों की सूची (30 Students)</h3>
-            <div id="student-list"></div>
+
+            <!-- Dropdown for Mobile Phones -->
+            <div class="mobile-select-wrapper">
+                <label for="mobile-student-select">📱 पहले यहाँ से बच्चा चुनें (Select Student):</label>
+                <select id="mobile-student-select" onchange="selectStudent(this.value)">
+                    <option value="">-- बच्चा चुनें / Select Student --</option>
+                </select>
+            </div>
+
+            <!-- Sidebar List for Desktop Computers -->
+            <div class="student-list-container" id="student-list"></div>
         </div>
 
-        <!-- Main Content: Form -->
+        <!-- PTM Feedback Entry Form -->
         <div class="form-container">
             <div class="form-card">
-                <h2>PTM फीडबैक फॉर्म (Google Sheet कनेक्टेड)</h2>
+                <h2>PTM फीडबैक फॉर्म</h2>
                 <form id="ptm-form">
                     <div class="form-group">
-                        <label>बच्चे का नाम (Student Name)</label>
-                        <input type="text" id="student_name" readonly placeholder="बाईं तरफ से बच्चा चुनें"
-                            style="background:#e9ecef; font-weight:bold;">
+                        <label>चुना गया बच्चा (Selected Student)</label>
+                        <input type="text" id="student_name" readonly placeholder="सूची या ड्रॉपडाउन से बच्चा चुनें">
                     </div>
 
                     <div class="form-group">
@@ -191,14 +288,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label>कमजोरियां (Weak Points / Improvement Needed)</label>
+                        <label>कमजोरियां (Weak Points)</label>
                         <textarea id="weak_points" required
                             placeholder="बच्चा किस विषय या चीज़ में कमजोर है?"></textarea>
                     </div>
 
                     <div class="form-group">
                         <label>शिकायतें (Complaints - if any)</label>
-                        <textarea id="complaints" placeholder="कोचिंग या पेरेंट्स की तरफ से कोई शिकायत?"></textarea>
+                        <textarea id="complaints" placeholder="कोई शिकायत है तो यहाँ लिखें..."></textarea>
                     </div>
 
                     <div class="form-group">
@@ -207,16 +304,15 @@
                             placeholder="पेरेंट्स का कोचिंग के बारे में क्या कहना है?"></textarea>
                     </div>
 
-                    <button type="submit" id="submit-btn">Google Sheet में सेव करें</button>
+                    <button type="submit" id="submit-btn">🚀 Google Sheet में सेव करें</button>
                 </form>
 
                 <div id="status-message"></div>
             </div>
         </div>
     </div>
-
     <script>
-        // आपकी इमेज से लिए गए सभी 30 बच्चों की लिस्ट
+        // 30 Students Data Base Array
         const students = [
             "ayush yadav", "Harsh Yadav", "Disha Yadav", "Peehoo Yadav", "Saurya Yadav",
             "Shivansh Yadav", "Aadarsh Yadav", "SHIV RAJ YADAV", "ayush yadav", "arpit yadav",
@@ -226,41 +322,56 @@
             "Ashu", "avnish", "YASH", "ATUL", "Aarav yadav"
         ];
 
-        // यहाँ अपना GOOGLE WEB APP URL डालें
-        const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwYqTyV1YkZSA5Myt3XAjJRdWxX0vOvEAvi7k47U1CqDvovX3Aq6ypQ0JC-oItxfOlYkg/exec";
+        // ⚠️ यहाँ अपना गूगल वेब एप URL पेस्ट करें
+        const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwmeGAMcnwtMJOPJw1LfjsVm4TagQWrvBXG-3jlmWhMyaVePLRj_AbbdVMDUoICKaz5Zw/exec";
 
-        // साइडबार में छात्रों के नाम लोड करना
         const listContainer = document.getElementById('student-list');
+        const mobileSelect = document.getElementById('mobile-student-select');
+
+        // Rendering student interface elements for both desktop list & mobile dropdown
         students.forEach((student, index) => {
+            const displayLabel = `${index + 1}. ${student}`;
+
+            // Setup Desktop List Structure
             const div = document.createElement('div');
             div.className = 'student-item';
-            div.innerText = `${index + 1}. ${student}`;
+            div.innerText = displayLabel;
             div.onclick = () => selectStudent(student);
             listContainer.appendChild(div);
+
+            // Setup Mobile Selector Dropdown Options
+            const option = document.createElement('option');
+            option.value = student;
+            option.innerText = displayLabel;
+            mobileSelect.appendChild(option);
         });
 
+        // Synchronize selected student data across components
         function selectStudent(name) {
             document.getElementById('student_name').value = name;
-            document.getElementById('parent_name').focus();
+            mobileSelect.value = name;
+
+            if (name) {
+                document.getElementById('parent_name').focus();
+            }
         }
 
-        // गूगल शीट में डेटा भेजने का फंक्शन
+        // Submit handler package transferring parameters to Google Sheet webhook
         document.getElementById('ptm-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
             const studentName = document.getElementById('student_name').value;
             if (!studentName) {
-                alert("कृपया पहले बाईं सूची से एक छात्र का चयन करें!");
+                alert("कृपया पहले एक छात्र का चयन करें!");
                 return;
             }
 
             const submitBtn = document.getElementById('submit-btn');
             const statusMsg = document.getElementById('status-message');
 
-            // बटन को डिसेबल और स्टेटस दिखाना
             submitBtn.disabled = true;
             statusMsg.className = 'loading';
-            statusMsg.innerText = "डेटा Google Sheet में सेव हो रहा है, कृपया प्रतीक्षा करें...";
+            statusMsg.innerText = "डेटा Google Sheet में सेव हो रहा है...";
             statusMsg.style.display = 'block';
 
             const record = {
@@ -272,24 +383,28 @@
                 opinion: document.getElementById('parents_opinion').value
             };
 
-            // API Call to Google Sheets
             fetch(googleScriptUrl, {
                 method: 'POST',
-                mode: 'no-cors', // सुरक्षा ब्लॉकिंग से बचने के लिए
+                mode: 'no-cors',
                 cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(record)
             })
                 .then(() => {
                     statusMsg.className = 'success';
-                    statusMsg.innerText = "सफलतापूर्वक Google Sheet में सेव कर दिया गया! ✅";
-                    this.reset();
+                    statusMsg.innerText = "सफलतापूर्वक Google Sheet में सेव हो गया! ✅";
+                    document.getElementById('ptm-form').reset();
+                    mobileSelect.value = "";
                     submitBtn.disabled = false;
+
+                    // Scroll to top for visibility on smaller devices
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
                     setTimeout(() => { statusMsg.style.display = 'none'; }, 3000);
                 })
                 .catch(error => {
-                    console.error('Error:', error);
-                    alert("डेटा सेव करने में समस्या आई, कृपया अपना Web App URL चेक करें।");
+                    console.error('Error Transmission:', error);
+                    alert("सेव करने में समस्या आई, कृपया इंटरनेट कनेक्शन या URL चेक करें।");
                     submitBtn.disabled = false;
                     statusMsg.style.display = 'none';
                 });
